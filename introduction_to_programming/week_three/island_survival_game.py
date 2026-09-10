@@ -155,12 +155,7 @@ if is_alive == True:
         else:
             print("Invalid choice. A snake bites you while you hesitate. Game Over!")
             is_alive = False
-        
-        
-#     elif player_location == "beach_storm":
-#         // (Insert your storm Level 3 choices here)
-#     ENDIF
-# ENDIF
+    
 
 # FINAL GAME OVER SCREEN
 if is_alive == False:
