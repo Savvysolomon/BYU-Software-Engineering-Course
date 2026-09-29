@@ -4,10 +4,16 @@ Program:                Periodic Table Generator
 Author:                 Solomon Umoh
 
 Description:            A program that creates and uses compound lists
-                        to generator period table.
+                        to generator periodic table.
 
+Addition:               I added a dictionary of known chemical formulas, also a 
+                        get_name_of_formula function that identifies and print 
+                        common name of a compound.
 
 """
+
+from formula import parse_formula
+
 
 # define the periodic table function
 def make_periodic_table():
@@ -111,10 +117,100 @@ def make_periodic_table():
     return periodic_table_dict
 
 
+# define molar mass function
+def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
+    """Compute and return the total molar mass of all elements
+    listed in the symbol_quantity_list.
+    """
+    
+    SYMBOL_INDEX = 0
+    QUANTITY_INDEX = 1
+    ATOMIC_MASS_INDEX = 1
+
+    total_molar_mass = 0.0
+
+    # loop through each item in the chemical formula list
+    for entry in symbol_quantity_list:
+        # separate symbol from the quantity
+        symbol = entry[SYMBOL_INDEX]
+        quantity = entry[QUANTITY_INDEX]
+        
+        # look up the element in the periodic table
+        element_info = periodic_table_dict[symbol]
+        
+        # get the atomic mass of the element
+        atomic_mass = element_info[ATOMIC_MASS_INDEX]
+        
+        # multiply atomic mass by the given quantity and add to the total
+        total_molar_mass += atomic_mass * quantity
+
+    # return the completed total mass
+    return total_molar_mass
+
+
+# addition of formula name function
+def identify_known_formulas_dict():
+    """This function creates and returns a dictionary containing common chemical formulas
+    as keys and their compound names as values.
+    """
+    known_formulas_dict = {
+        "H2O": "water",
+        "C6H12O6": "glucose",
+        "NaCl": "sodium chloride",
+        "C12H22O11": "sucrose",
+        "CO2": "carbon dioxide",
+        "NH3": "ammonia",
+        "CH4": "methane",
+        "C6H6": "benzene",
+        "C3H8O": "isopropyl alcohol",
+        "C2H5OH": "ethanol"
+    }
+    return known_formulas_dict
+
+def get_name_of_formula(formula, known_formulas_dict):
+    """Look up a chemical formula in the known_formulas_dict. 
+    If found, return the name of the compound.
+    If not found, return 'unknown compound'.
+    """
+    if formula in known_formulas_dict:
+        return known_formulas_dict[formula]
+    else:
+        return "unknown compound"
+
+
+
 # define the main function
 def main():
-    table = make_periodic_table()
+    # get a chemical formula from user.
+    formula_input = input("Enter the molecular formula of the sample: ")
+    
+    # get mass in grams from the user.
+    sample_mass = float(input("Enter the mass in grams of the sample: "))
+    
+    # call the make_periodic_table and store the dictionary.
+    periodic_table = make_periodic_table()
+    
+    # call parse_formula so as to convert string formula to a symbol list.
+    symbol_quantity_list = parse_formula(formula_input, periodic_table)
+    
+    # call compute_molar_mass to find the total molar weight.
+    molar_mass = compute_molar_mass(symbol_quantity_list, periodic_table)
+    
+    # calculate number of moles.
+    number_of_moles = sample_mass / molar_mass
 
-    print(table)
+    # call the new dictionary function and name lookup
+    known_formulas = identify_known_formulas_dict()
+    compound_name = get_name_of_formula(formula_input, known_formulas)
+    
+    # print results formatted to 5 decimal places.
+    print("\n=========================================")
+    print(f"Compound Name: {compound_name.title()}")
+    print(f"{molar_mass:.5f} grams/mole")
+    print(f"{number_of_moles:.5f} moles")
+    print("=========================================")
 
-main()
+
+# call the main function to execute
+if __name__ == "__main__":
+    main()
