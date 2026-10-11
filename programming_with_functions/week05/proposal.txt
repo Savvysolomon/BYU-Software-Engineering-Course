@@ -11,16 +11,43 @@ CSE 111 Proposal for a Student Chosen Program
 
 1. What is the title of your program?
 
+SavvyBudget Desktop Dashboard
+
+
 2. What real-world problem will your program address or help to solve?
+
+Many individuals struggle to keep track of their monthly income and daily expenditures, 
+leading to overspending and financial stress. This program provides an easy-to-use desktop 
+visual interface where users can log transactions by category, monitor remaining balance 
+in real time, and ensure they stay within their targeted financial budget.
+
 
 3. What will you learn from developing this program?
 
+I will learn how to build a multi-window Graphical User Interface (GUI) using Python's tkinter module, 
+design visual event-driven loops (like button clicks and inputs), manage data persistence using 
+file read/write operations, and implement a distinct separation between backend logical calculations 
+and frontend layout rendering.
+
+
 4. What Python modules will your program use?
+
+tkinter, csv, os, and pytest.
+
 
     (Some examples are: csv, datetime, functools, matplotlib, math,
     pandas, pytest, random, requests, and tkinter.)
 
 5. List the names of functions you will need?
+
+- read_budget_file(filename)
+- write_budget_file(filename, transactions)
+- calculate_total_expenses(transactions)
+- calculate_remaining_balance(income, total_expenses)
+- filter_transactions_by_category(transactions, category)
+- create_gui_window()
+- add_transaction_clicked()
+
 
     (Remember that the most reusable functions don't get user input and
     don't print results but instead have parameters and return a result.
@@ -34,4 +61,8 @@ CSE 111 Proposal for a Student Chosen Program
     to have parameters and return a result.)
 
 6. List the names of the test functions you will write.
+
+- test_calculate_total_expenses()
+- test_calculate_remaining_balance()
+- test_filter_transactions_by_category()
 
